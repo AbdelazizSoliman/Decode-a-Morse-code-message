@@ -15,12 +15,19 @@ def decode_char(morse_code)
 end
 
 def decode_word(morse_code)
-  words = morse_code.split(' ')
-  decoded_word = words.map { |morse_char| MORSE_LETTERS[morse_char] }.join('')
-  decoded_word
+  words = morse_code.split('   ')
+  decoded_words = words.map do |word|
+    word.split.map { |morse_char| decode_char(morse_char) }.join
+  end
+  decoded_words.join(' ')
 end
 
-# Test example
+# Test examples
 puts decode_char('.-')
-puts decode_word("-- -.--")
+puts decode_word('-- -.--')
+puts decode_word('-- -.--    -. .- -- .')
 
+# Decoding the message from the old bottle
+message_in_morse = '.-    -... --- -..-   ..-. ..- .-.. .-..   --- ..-.   .-. ..- -... .. . ...'
+decoded_message = decode_word(message_in_morse)
+puts decoded_message
